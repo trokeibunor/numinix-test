@@ -32,7 +32,8 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
+    <script type="module">
+        import { faker } from "https://cdn.skypack.dev/@faker-js/faker@v7.4.0";
         $(document).ready(function() {
             let customersData = [];
 
@@ -56,9 +57,10 @@
                 const customerList = $('.card-grid');
                 customerList.empty(); // Clear existing customers
                 customers.forEach(function(customer) {
+                    const profileImage = faker.image.avatar(); // Generate a fake profile image
                     const customerCard = `
                         <div class="card">
-                            <img src="" alt="">
+                            <img src="${profileImage}" alt="Profile Image">
                             <div class="card-content">
                                 <div class="intro">
                                     <h4 class="name">${customer.name}</h4>
