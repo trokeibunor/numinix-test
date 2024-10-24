@@ -34,15 +34,12 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="module">
         $(document).ready(function() {
-            const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-            const apiUrl = 'http://jsonplaceholder.typicode.com/users';
-            const pexelsApiUrl = 'https://api.pexels.com/v1/search?query=profile';
             let customersData = [];
             const pexelsApiKey = 'KumJ7iLQUydgIXDOpKO3bvHayuSEMPWus2aEkLrv6JH9OTNiMYBKutyb';
             // Function to fetch and display customers
             function fetchCustomers() {
                 $.ajax({
-                    url: proxyUrl + apiUrl,
+                    url: 'http://jsonplaceholder.typicode.com/users',
                     method: 'GET',
                     success: function(customers) {
                         customersData = customers;
@@ -56,7 +53,7 @@
 
             function fetchProfileImage(callback) {
                 $.ajax({
-                    url: proxyUrl + pexelsApiUrl,
+                    url: 'https://api.pexels.com/v1/search',
                     method: 'GET',
                     data: {
                         query: 'person',
