@@ -70,7 +70,7 @@ body {
                     border: none;
                     border-radius: 8px;
                     outline: none;
-                    width: 50%;
+                    width: 400px;
                 }
             }
             @media only screen and (max-width: 767px) {
@@ -121,7 +121,7 @@ body {
                         width: 100%;
                         height: 12rem;
                         border-radius: 8px 8px 0px 0px;
-                        background-color: #ccc;
+                        background-color: #ccc;                       
                     }
                     .intro {
                         display: flex;
@@ -130,6 +130,33 @@ body {
                         padding: 8px 5%;
                         p {
                             color: #909090;
+                        }
+                        .desc-text {
+                            display: none;
+                            font-size: 14px;
+                            color: #51C5FF;
+                        }
+                    }
+                    @media only screen and (max-width: 767px) {
+                        /* Styles for phone screens */
+                        padding: 1rem 0px;
+                        flex-direction: row-reverse;
+                        justify-content: space-between;
+                        align-items: center;
+                        .intro {
+                            width: 55%;
+                            .desc-text {
+                                font-size: 14px;
+                                color: #51C5FF;
+                                display: block;
+                            }
+                        }
+                        img.profile-image {
+                            /* Styles for phone screens */
+                            width: 6.25rem;
+                            height: 6.25rem;
+                            border-radius: 50%;
+                            margin-right: 12px;
                         }
                     }
                 }
@@ -142,13 +169,15 @@ body {
                     flex-direction: column;
                     gap: 1rem;
                     @media only screen and (max-width: 767px) {
-                        /* Styles for phone screens */
                         border-top: 1px solid #E8E8E8;
                     }
                     
                     .desc-text {
                         font-size: 14px;
                         color: #51C5FF;
+                        @media only screen and (max-width: 767px) {
+                            display: none;
+                        }
                     }
                     .attributes {
                         display: flex;
