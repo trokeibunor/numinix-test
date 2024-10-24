@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+    <title>Numinix Interview Test</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <nav></nav>
+    <div class="container">
+        <div class="holder">
+            <div class="search-holder">
+                <div class="input-holder">
+                    <img src="/icons/search.svg" alt="">
+                    <input type="text" id="search" placeholder="Find Customers">
+                </div>
+                <select id="sort">
+                    <option value="default">Filter by Name [A-Z]</option>
+                    <option value="asc">Name (A-Z)</option>
+                    <option value="desc">Name (Z-A)</option>
+                </select>
+            </div>
+            <div class="card-grid">
+                <!-- Customer cards will be dynamically inserted here -->
+            </div>
+            <div class="no-results" style="display: none;">No customer(s) found with the search criteria.</div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            let customersData = [];
+
+            // Function to fetch and display customers
+            function fetchCustomers() {
+                $.ajax({
+                    url: 'http://jsonplaceholder.typicode.com/users',
+                    method: 'GET',
+                    success: function(customers) {
+                        customersData = customers;
+                        displayCustomers(customers);
+                    },
+                    error: function() {
+                        alert('Failed to fetch customer data.');
+                    }
+                });
+            }
+
+            // Function to display customers
+            function displayCustomers(customers) {
+                const customerList = $('.card-grid');
+                customerList.empty(); // Clear existing customers
+                customers.forEach(function(customer) {
+                    const customerCard = `
+                        <div class="card">
+                            <img src="" alt="">
+                            <div class="card-content">
+                                <div class="intro">
+                                    <h4 class="name">${customer.name}</h4>
+                                    <p>@${customer.username}</p>
+                                </div>
+                                <p class="desc-text">“${customer.company.catchPhrase}”</p>
+                                <div class="attributes">
+                                    <div class="row">
+                                        <img src="/icons/mail.svg" alt="">
+                                        <p>${customer.email}</p>
+                                    </div>
+                                    <div class="row location">
+                                        <img src="/icons/location.svg" alt="">
+                                        <p>${customer.address.street}, ${customer.address.suite}, ${customer.address.city}, ${customer.address.zipcode}</p>
+                                    </div>
+                                    <div class="row">
+                                        <img src="/icons/call.svg" alt="">
+                                        <p>${customer.phone}</p>
+                                    </div>
+                                    <div class="row">
+                                        <img src="/icons/web.svg" alt="">
+                                        <p>${customer.website}</p>
+                                    </div>
+                                    <div class="row">
+                                        <img src="/icons/bag.svg" alt="">
+                                        <p>${customer.company.name}</p>
+                                    </div>
+                                    <div class="row">
+                                        <img src="/icons/building.svg" alt="">
+                                        <p>${customer.company.bs}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`;
+                    customerList.append(customerCard);
+                });
+            }
+
+            // Function to filter customers
+            function filterCustomers(searchTerm) {
+                const filteredCustomers = customersData.filter(function(customer) {
+                    return customer.name.toLowerCase().includes(searchTerm.toLowerCase());
+                });
+
+                displayCustomers(filteredCustomers);
+
+                if (filteredCustomers.length === 0) {
+                    $('.no-results').show();
+                } else {
+                    $('.no-results').hide();
+                }
+            }
+
+            // Function to sort customers
+            function sortCustomers(order) {
+                let sortedCustomers = [...customersData];
+                if (order === 'asc') {
+                    sortedCustomers.sort((a, b) => a.name.localeCompare(b.name));
+                } else if (order === 'desc') {
+                    sortedCustomers.sort((a, b) => b.name.localeCompare(a.name));
+                }
+                displayCustomers(sortedCustomers);
+            }
+
+            // Event listener for search input
+            $('#search').on('input', function() {
+                const searchTerm = $(this).val();
+                filterCustomers(searchTerm);
+            });
+
+            // Event listener for sort select
+            $('#sort').on('change', function() {
+                const sortOrder = $(this).val();
+                sortCustomers(sortOrder);
+            });
+
+            // Fetch and display customers on page load
+            fetchCustomers();
+        });
+    </script>
+</body>
+</html>
