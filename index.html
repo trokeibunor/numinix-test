@@ -60,12 +60,14 @@
                     const profileImage = faker.image.avatar(); // Generate a fake profile image
                     const customerCard = `
                         <div class="card">
-                            <img src="${profileImage}" alt="Profile Image">
-                            <div class="card-content">
+                            <div class="top">
+                                <img class="profile-image" src="${profileImage}" alt="Profile Image">
                                 <div class="intro">
                                     <h4 class="name">${customer.name}</h4>
                                     <p>@${customer.username}</p>
-                                </div>
+                                </div>    
+                            </div>
+                            <div class="card-content">
                                 <p class="desc-text">“${customer.company.catchPhrase}”</p>
                                 <div class="attributes">
                                     <div class="row">
